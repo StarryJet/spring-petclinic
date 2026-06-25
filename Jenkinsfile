@@ -22,15 +22,15 @@ pipeline {
             steps {
                 echo "Downloading and Running JMeter directly via CDN..."
                 sh '''
-                    # Download JMeter langsung tanpa lewat Maven plugin!
+                    # Download JMeter Direct
                     if [ ! -d "apache-jmeter-5.6.3" ]; then
                         echo "Downloading JMeter pack from fast CDN..."
                         curl -L -s -O https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
                         tar -xzf apache-jmeter-5.6.3.tgz
                     fi
                     echo "Executing test plan..."
-                    # Langsung jalankan biner JMeter ke file .jmx lu
-                    ./apache-jmeter-5.6.3/bin/jmeter -n -t src/test/jmeter/petclinic_test.jmx -l results.jtl
+                    # Run file petclinic_test.jmx
+                    ./apache-jmeter-5.6.3/bin/jmeter -n -t petclinic_test.jmx -l results.jtl
                 '''
             }
         }

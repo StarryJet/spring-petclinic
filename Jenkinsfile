@@ -20,9 +20,17 @@ pipeline {
 
         stage('3. Run JMeter Performance Test') {
             steps {
-                echo "Configuring and Running JMeter test via Maven Plugin..."
-                // Ditambahkan goal 'jmeter:configure' sebelum melakukan running test
-                sh './mvnw com.lazerycode.jmeter:jmeter-maven-plugin:3.8.0:configure com.lazerycode.jmeter:jmeter-maven-plugin:3.8.0:jmeter -DgenerateReports=false'
+                echo "Downloading and Running JMeter via curl..."
+                sh '''
+                    if [ ! -d "apache-jmeter-5.6.3" ]; then
+                        echo "Downloading JMeter..."
+                        curl -L -O https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz
+                        tar -xzf apache-jmeter-5.6.3.tgz
+                    fi
+                    echo "Running JMeter test..."
+                    # Mengeksekusi jmx yang tadi udah lu pindahkan ke dalam folder src/test/jmeter
+                    ./apache-jmeter-5.6.3/bin/jmeter -n -t src/test/jmeter/petclinic_test.jmx -l results.jtl
+                '''
             }
         }
 

@@ -20,17 +20,10 @@ pipeline {
 
         stage('3. Run JMeter Performance Test') {
             steps {
-                echo "Downloading and Running JMeter via curl..."
-                sh '''
-                    if [ ! -d "apache-jmeter-5.6.3" ]; then
-                        echo "Downloading JMeter..."
-                        curl -L -O https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz
-                        tar -xzf apache-jmeter-5.6.3.tgz
-                    fi
-                    echo "Running JMeter test..."
-                    # Mengeksekusi jmx yang tadi udah lu pindahkan ke dalam folder src/test/jmeter
-                    ./apache-jmeter-5.6.3/bin/jmeter -n -t src/test/jmeter/petclinic_test.jmx -l results.jtl
-                '''
+                echo "Running local JMeter from Windows Host via Maven Exec..."
+                // Memanggil jmeter.bat yang ada di folder laptop lu langsung!
+                // Sesuaikan 'C:/jmeter/bin/jmeter.bat' dengan lokasi tempat lu ekstrak JMeter di awal tadi
+                sh 'mvn exec:exec -Dexec.executable="C:/jmeter/bin/jmeter.bat" -Dexec.args="-n -t src/test/jmeter/petclinic_test.jmx -l results.jtl"'
             }
         }
 

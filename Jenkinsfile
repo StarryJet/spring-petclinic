@@ -37,19 +37,21 @@ pipeline {
             }
         }
 
-        // stage('4. Docker Build') {
-        //     steps {
-        //         sh "docker build -t ${DOCKER_IMAGE} ."
-        //     }
-        // }
+        stage('4. Docker Build') {
+            steps {
+                echo "Building Docker image..."
+                sh "docker build -t ${DOCKER_IMAGE} ."
+            }
+        }
 
-        // stage('5. Docker Push') {
-        //     steps {
-        //         withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-        //             sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
-        //             sh "docker push ${DOCKER_IMAGE}"
-        //         }
-        //     }
-        // }
+        stage('5. Docker Push') {
+            steps {
+                echo "Pushing image to Docker Hub..."
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
+                    sh "docker push ${DOCKER_IMAGE}"
+                }
+            }
+        }
     }
 }

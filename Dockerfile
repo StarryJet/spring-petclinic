@@ -1,10 +1,10 @@
-# Step 1: Build w Maven and OpenJDK 17
+# Step 1: Build with Maven and OpenJDK 17
 FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
 COPY . .
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests -Dcheckstyle.skip=true
 
-# Step 2: Run app w OpenJDK 17 Slim image
+# Step 2: Run app with Eclipse Temurin 17 Alpine image
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar

@@ -20,10 +20,8 @@ pipeline {
 
         stage('3. Run JMeter Performance Test') {
             steps {
-                echo "Running local JMeter from Windows Host via Maven Exec..."
-                // Memanggil jmeter.bat yang ada di folder laptop lu langsung!
-                // Sesuaikan 'C:/jmeter/bin/jmeter.bat' dengan lokasi tempat lu ekstrak JMeter di awal tadi
-                sh 'mvn exec:exec -Dexec.executable="C:/jmeter/bin/jmeter.bat" -Dexec.args="-n -t src/test/jmeter/petclinic_test.jmx -l results.jtl"'
+                echo "Running JMeter via Embedded Maven Plugin..."
+                sh './mvnw jmeter:jmeter'
             }
         }
 

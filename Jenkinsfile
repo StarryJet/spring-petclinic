@@ -20,25 +20,25 @@ pipeline {
 
         stage('3. Run JMeter Performance Test') {
             steps {
-                echo "Running JMeter test using Docker Container..."
-                // Menjalankan JMeter via image Docker resmi, tidak butuh wget/instal lokal lagi!
-                sh "docker run --rm -v \$(pwd):/proyek -w /proyek justb4/jmeter -n -t petclinic_test.jmx -l results.jtl"
+                echo "Running JMeter test via Maven Plugin..."
+                // Menggunakan Maven wrapper bawaan proyek untuk mengeksekusi jmeter:jmeter
+                sh './mvnw com.lazerycode.jmeter:jmeter-maven-plugin:3.8.0:jmeter -DgenerateReports=false'
             }
         }
 
-        stage('4. Docker Build') {
-            steps {
-                sh "docker build -t ${DOCKER_IMAGE} ."
-            }
-        }
+        // stage('4. Docker Build') {
+        //     steps {
+        //         sh "docker build -t ${DOCKER_IMAGE} ."
+        //     }
+        // }
 
-        stage('5. Docker Push') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
-                    sh "docker push ${DOCKER_IMAGE}"
-                }
-            }
-        }
+        // stage('5. Docker Push') {
+        //     steps {
+        //         withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+        //             sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
+        //             sh "docker push ${DOCKER_IMAGE}"
+        //         }
+        //     }
+        // }
     }
 }

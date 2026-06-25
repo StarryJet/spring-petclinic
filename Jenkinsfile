@@ -14,23 +14,15 @@ pipeline {
 
         stage('2. Maven Package') {
             steps {
-                // Menggunakan './mvnw' dengan perintah 'sh' karena Jenkins berjalan di container Linux
                 sh './mvnw clean package -DskipTests'
             }
         }
 
         stage('3. Run JMeter Performance Test') {
             steps {
-                // Taktik otomatis: Download, ekstrak, dan jalankan JMeter langsung di dalam container
-                sh '''
-                    if [ ! -d "apache-jmeter-5.6.3" ]; then
-                        echo "Downloading JMeter..."
-                        wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz
-                        tar -xzf apache-jmeter-5.6.3.tgz
-                    fi
-                    echo "Running JMeter test..."
-                    ./apache-jmeter-5.6.3/bin/jmeter -n -t petclinic_test.jmx -l results.jtl
-                '''
+                echo "Running JMeter test using Docker Container..."
+                // Menjalankan JMeter via image Docker resmi, tidak butuh wget/instal lokal lagi!
+                sh "docker run --rm -v \$(pwd):/proyek -w /proyek justb4/jmeter -n -t petclinic_test.jmx -l results.jtl"
             }
         }
 

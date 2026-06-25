@@ -20,9 +20,9 @@ pipeline {
 
         stage('3. Run JMeter Performance Test') {
             steps {
-                echo "Running JMeter Performance Test with Force Configuration..."
-                // Kita gabungin goal configure dan verify dalam satu baris perintah Maven wrapper
-                sh './mvnw com.lazerycode.jmeter:jmeter-maven-plugin:3.8.0:configure verify -Dsurefire.skip=true'
+                echo "Running JMeter Performance Test via standard lifecycle..."
+                // Cukup panggil verify, urutan configure dan jmeter udah diatur otomatis oleh pom.xml
+                sh './mvnw verify -Dsurefire.skip=true'
             }
         }
 

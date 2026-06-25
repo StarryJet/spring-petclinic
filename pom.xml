@@ -187,13 +187,14 @@
         <artifactId>jmeter-maven-plugin</artifactId>
         <version>3.8.0</version>
         <executions>
-          <execution>
-            <id>jmeter-tests</id>
-            <goals>
-              <goal>jmeter</goal>
-            </goals>
-          </execution>
-        </executions>
+                    <execution>
+                        <id>jmeter-tests</id>
+                        <goals>
+                            <goal>configure</goal>
+                            <goal>jmeter</goal>
+                        </goals>
+                    </execution>
+                </executions>
         <configuration>
           <testFilesDirectory>${project.basedir}/src/test/jmeter</testFilesDirectory>
            <generateReports>false</generateReports>

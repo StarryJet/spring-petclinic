@@ -20,9 +20,18 @@ pipeline {
 
         stage('3. Run JMeter Performance Test') {
             steps {
-                echo "Running JMeter Performance Test via standard lifecycle..."
-                // Cukup panggil verify, urutan configure dan jmeter udah diatur otomatis oleh pom.xml
-                sh './mvnw verify -Dsurefire.skip=true'
+                echo "Downloading and Running JMeter directly via CDN..."
+                sh '''
+                    # Download JMeter langsung tanpa lewat Maven plugin!
+                    if [ ! -d "apache-jmeter-5.6.3" ]; then
+                        echo "Downloading JMeter pack from fast CDN..."
+                        curl -L -s -O https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
+                        tar -xzf apache-jmeter-5.6.3.tgz
+                    fi
+                    echo "Executing test plan..."
+                    # Langsung jalankan biner JMeter ke file .jmx lu
+                    ./apache-jmeter-5.6.3/bin/jmeter -n -t src/test/jmeter/petclinic_test.jmx -l results.jtl
+                '''
             }
         }
 

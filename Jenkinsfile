@@ -21,8 +21,8 @@ pipeline {
         stage('3. Run JMeter Performance Test') {
             steps {
                 echo "Running JMeter Performance Test via Maven Lifecycle..."
-                // Menggunakan fase verify agar mengeksekusi plugin yang tertanam di pom.xml dengan benar
-                sh './mvnw verify -DskipTests'
+                // Menggunakan surefire.skip buat matiin unit test biasa, jadi cuma JMeter yang jalan!
+                sh './mvnw verify -Dsurefire.skip=true'
             }
         }
 

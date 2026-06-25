@@ -39,7 +39,7 @@ pipeline {
 
         stage('4. Docker Build') {
             steps {
-                echo "Building Docker image..."
+                // Sekarang perintah ini bakal jalan 100% karena docker.exe udah nempel di /usr/bin/docker
                 sh "docker build -t ${DOCKER_IMAGE} ."
             }
         }

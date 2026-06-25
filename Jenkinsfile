@@ -41,14 +41,13 @@ pipeline {
         }
 
         stage('5. Docker Push') {
-            steps {
-                echo "Pushing image to Docker Hub..."
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    // Pake format login Windows yang aman
-                    bat "echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin"
-                    bat "docker push ${DOCKER_IMAGE}"
-                }
+    steps {
+        script {
+            docker.withRegistry('', 'docker-hub-credentials') {
+                bat "docker push ${DOCKER_IMAGE}"
             }
         }
+    }
+}
     }
 }

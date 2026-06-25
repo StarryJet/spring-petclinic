@@ -20,9 +20,9 @@ pipeline {
 
         stage('3. Run JMeter Performance Test') {
             steps {
-                echo "Running JMeter test via Maven Plugin..."
-                // Menggunakan Maven wrapper bawaan proyek untuk mengeksekusi jmeter:jmeter
-                sh './mvnw com.lazerycode.jmeter:jmeter-maven-plugin:3.8.0:jmeter -DgenerateReports=false'
+                echo "Configuring and Running JMeter test via Maven Plugin..."
+                // Ditambahkan goal 'jmeter:configure' sebelum melakukan running test
+                sh './mvnw com.lazerycode.jmeter:jmeter-maven-plugin:3.8.0:configure com.lazerycode.jmeter:jmeter-maven-plugin:3.8.0:jmeter -DgenerateReports=false'
             }
         }
 

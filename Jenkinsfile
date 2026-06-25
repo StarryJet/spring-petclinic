@@ -53,7 +53,7 @@ pipeline {
     post {
         success {
             script {
-                echo "Pipeline berhasil! Sedang mencoba update Jira..."
+                echo "Pipeline Working, Sends update to Jira..."
                 // Mengirim log keberhasilan ke tiket Jira SCRUM-5
                 jiraComment site: 'meltzout', idOrKey: 'SCRUM-5', comment: 'Build, JMeter Test, and Docker Push executed successfully in Jenkins Pipeline.'
             }

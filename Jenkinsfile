@@ -20,8 +20,9 @@ pipeline {
 
         stage('3. Run JMeter Performance Test') {
             steps {
-                echo "Running JMeter via Embedded Maven Plugin..."
-                sh './mvnw jmeter:jmeter'
+                echo "Running JMeter Performance Test via Maven Lifecycle..."
+                // Menggunakan fase verify agar mengeksekusi plugin yang tertanam di pom.xml dengan benar
+                sh './mvnw verify -DskipTests'
             }
         }
 

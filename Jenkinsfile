@@ -24,7 +24,7 @@ pipeline {
         stage('3. Run JMeter Performance Test') {
             steps {
                 echo "Execute JMeter via Environment Variable..."
-                bat "%JMETER_BIN%\\jmeter.bat -n -t petclinic_test.jmx -l results.jtl"
+                bat 'java -jar C:\\jmeter\\bin\\ApacheJMeter.jar -n -t petclinic_test.jmx -l results.jtl'
             }
         }
 

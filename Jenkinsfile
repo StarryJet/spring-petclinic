@@ -14,7 +14,7 @@ pipeline {
 
         stage('2. Build') {
             steps {
-                // Gunakan 'del /f /s /q' untuk hapus file di Windows
+                // Utilize 'del /f /s /q' to remove files on Windows
                 bat 'if exist apache-jmeter-5.6.3 del /f /s /q apache-jmeter-5.6.3'
                 bat 'call mvnw.cmd clean package -DskipTests'
             }
@@ -23,7 +23,7 @@ pipeline {
         stage('3. Run JMeter Performance Test') {
             steps {
                 echo "Downloading and Running JMeter on Windows..."
-                // Menggunakan PowerShell/Batch untuk download dan eksekusi
+                // Utilize PowerShell/Batch for download and execution
                 bat '''
                     powershell -Command "Invoke-WebRequest -Uri 'https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.zip' -OutFile 'jmeter.zip'"
                     powershell -Command "Expand-Archive -Path 'jmeter.zip' -DestinationPath '.'"

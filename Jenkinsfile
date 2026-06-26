@@ -54,14 +54,14 @@ pipeline {
         success {
             script {
                 echo "Pipeline Working, Sends update to Jira..."
-                // Sending log of success to Jira ticket SCRUM-5
-                jiraAddComment site: 'meltzout', idOrKey: 'SCRUM-5', comment: 'Build, JMeter Test, and Docker Push executed successfully in Jenkins Pipeline.'
+                // Sending log of success to Jira ticket SCRUM-6
+                jiraAddComment site: 'meltzout', idOrKey: 'SCRUM-6', comment: 'Build, JMeter Test, and Docker Push executed successfully in Jenkins Pipeline.'
             }
         }
         failure {
             script {
-                // Sending log of failure to Jira ticket SCRUM-5
-                jiraAddComment site: 'meltzout', idOrKey: 'SCRUM-5', comment: 'Jenkins Pipeline failed during execution. Please check the console output.'
+                // Sending log of failure to Jira ticket SCRUM-6
+                jiraAddComment site: 'meltzout', idOrKey: 'SCRUM-6', comment: 'Jenkins Pipeline failed during execution. Please check the console output.'
             }
         }
 }

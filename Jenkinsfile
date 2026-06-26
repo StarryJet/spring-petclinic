@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'starryjet/spring-petclinic:latest'
+        JMETER_BIN = 'C:\\jmeter\\bin'
     }
 
     stages {
@@ -22,15 +23,8 @@ pipeline {
 
         stage('3. Run JMeter Performance Test') {
             steps {
-                echo "Downloading and Running JMeter on Windows..."
-                // Utilize PowerShell/Batch for download and execution
-                bat '''
-                    powershell -Command "Invoke-WebRequest -Uri 'https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.zip' -OutFile 'jmeter.zip'"
-                    powershell -Command "Expand-Archive -Path 'jmeter.zip' -DestinationPath '.'"
-                    
-                    echo "Executing test plan..."
-                    call apache-jmeter-5.6.3\\bin\\jmeter.bat -n -t petclinic_test.jmx -l results.jtl
-                '''
+                echo "Execute JMeter via Environment Variable..."
+                bat "%JMETER_BIN%\\jmeter.bat -n -t petclinic_test.jmx -l results.jtl"
             }
         }
 
